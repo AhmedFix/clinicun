@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 // my imports
 import '../../app.dart';
 
@@ -105,10 +108,44 @@ class _BuildQuestionsItemsBody extends StatefulWidget {
 }
 
 class __BuildQuestionsItemsBodyState extends State<_BuildQuestionsItemsBody> {
+  final Completer<WebViewController> _controller =
+      Completer<WebViewController>();
+
+  int _stackToView = 1;
+
+  void _handleLoad(String value) {
+    setState(() {
+      _stackToView = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return widget.questions == []
-        ? VideoItemWidget()
+    return widget.questions!.isEmpty
+        ? Material(
+            child: IndexedStack(
+              index: _stackToView,
+              children: [
+                Column(
+                  children: <Widget>[
+                    Expanded(
+                        child: WebView(
+                      initialUrl: "https://youtu.be/7eiW5KSTQPk",
+                      javascriptMode: JavascriptMode.unrestricted,
+                      onPageFinished: _handleLoad,
+                      onWebViewCreated: (WebViewController webViewController) {
+                        _controller.complete(webViewController);
+                      },
+                    )),
+                  ],
+                ),
+                Container(
+                    child: Center(
+                  child: CircularProgressIndicator(),
+                )),
+              ],
+            ),
+          )
         : Container(
             height: MediaQuery.of(context).size.height * 0.85,
             padding: EdgeInsets.only(bottom: 10),
