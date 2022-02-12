@@ -37,7 +37,7 @@ class _ItemQuestionWidgetState extends State<ItemQuestionWidget> {
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 print(snapshot.error);
-                
+
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -71,7 +71,6 @@ class _ItemQuestionWidgetState extends State<ItemQuestionWidget> {
                               ))
                   ],
                 );
-
               } else {
                 return snapshot.hasData
                     ? _BuildQuestionsItemsBody(
@@ -108,31 +107,33 @@ class _BuildQuestionsItemsBody extends StatefulWidget {
 class __BuildQuestionsItemsBodyState extends State<_BuildQuestionsItemsBody> {
   @override
   Widget build(BuildContext context) {
-    return widget.questions.isImpty?VideoItemWidget(): Container(
-        height: MediaQuery.of(context).size.height * 0.85,
-        padding: EdgeInsets.only(bottom: 10),
-        child: ListView.builder(
-            itemCount: widget.questions!.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    new MaterialPageRoute(
-                      builder: (context) => QuestionsScreen(
-                        user_id: widget.user_id,
-                        question: widget.questions![index],
-                      ),
+    return widget.questions == []
+        ? VideoItemWidget()
+        : Container(
+            height: MediaQuery.of(context).size.height * 0.85,
+            padding: EdgeInsets.only(bottom: 10),
+            child: ListView.builder(
+                itemCount: widget.questions!.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        new MaterialPageRoute(
+                          builder: (context) => QuestionsScreen(
+                            user_id: widget.user_id,
+                            question: widget.questions![index],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 12),
+                          child: Text(widget.questions![index].question)),
                     ),
                   );
-                },
-                child: Card(
-                  child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 12),
-                      child: Text(widget.questions![index].question)),
-                ),
-              );
-            }));
+                }));
   }
 }
