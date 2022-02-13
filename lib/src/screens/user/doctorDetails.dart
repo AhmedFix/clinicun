@@ -350,13 +350,13 @@ class __BuildQuestionsItemsBodyState extends State<_BuildQuestionsItemsBody> {
         return Container(
           padding: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
           child: Align(
-            alignment: (widget.messages![index].messageType == "receiver"
+            alignment: (widget.messages![index].messageType == "reciver"
                 ? Alignment.topLeft
                 : Alignment.topRight),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: (widget.messages![index].messageType == "receiver"
+                color: (widget.messages![index].messageType == "reciver"
                     ? Colors.grey.shade200
                     : Colors.teal[200]),
               ),
